@@ -1,0 +1,202 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+     class menu{
+        public static void foodmenu() {
+            System.out.println("              APNA DHABA                ");
+        System.out.println("--------------------------------------------");
+        System.out.println();
+        System.out.println("Enter Input To Acess The Menu");
+        System.out.print(":1: VEGETERIAN"+"     ");
+        System.out.println(":2: NON-VEGETERIAN");
+        Scanner scanner= new Scanner(System.in);
+        int input=scanner.nextInt();
+        if(input==1){
+            vegmain();
+
+        }
+        else if(input==2){
+            nonmain();
+
+
+        }
+        else{
+            System.out.println("Please Enter The Correct Input:");
+            foodmenu();
+        }
+
+    
+        
+        
+
+        }
+
+        public static void nonmain() {
+            Map<String, Double> menu = new HashMap<>();
+            menu.put("chicken curry", 199.0);
+            menu.put("chicken 2 payaza", 209.0);
+            menu.put("chicken bharta", 129.0);
+            menu.put("mutton kosha", 399.0);
+            menu.put("egg curry", 59.0);
+            menu.put("roti", 5.0);
+    
+            Map<Integer, Map<String, Integer>> orders = new HashMap<>();
+            Scanner scanner = new Scanner(System.in);
+    
+            while (true) {
+                System.out.println("\n1. Add order to a table");
+                System.out.println("2. Calculate bill for a table");
+                System.out.println("3. Exit");
+                System.out.print("Choose an option: ");
+                int option = scanner.nextInt();
+    
+                switch (option) {
+                    case 1:
+                        System.out.print("Enter table number: ");
+                        int tableNumber = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline character
+                        System.out.println("Enter item (chicken curry, chicken 2 payaza, chicken bharta): ");
+                        System.out.println("Enter item (mutton bharta, mutton kosha): ");
+                        System.out.println("Enter item (egg curry,roti): ");
+                        String item = scanner.nextLine().toLowerCase();
+    
+                        if (!menu.containsKey(item)) {
+                            System.out.println("Invalid item entered. Please try again.");
+                            continue;
+                        }
+    
+                        System.out.print("Enter quantity: ");
+                        int quantity = scanner.nextInt();
+    
+                        orders.computeIfAbsent(tableNumber, k -> new HashMap<>())
+                                .merge(item, quantity, Integer::sum);
+                        System.out.println(quantity + " " + item + "(s) added to table " + tableNumber + "'s order.");
+                        break;
+    
+                    case 2:
+                        System.out.print("Enter table number to calculate bill: ");
+                        tableNumber = scanner.nextInt();
+                        Map<String, Integer> tableOrder = orders.getOrDefault(tableNumber, new HashMap<>());
+    
+                        if (tableOrder.isEmpty()) {
+                            System.out.println("No items ordered for table " + tableNumber);
+                            continue;
+                        }
+    
+                        System.out.println("Bill for Table " + tableNumber + ":");
+                        double total = 0.0;
+                        for (Map.Entry<String, Integer> entry : tableOrder.entrySet()) {
+                            String itemName = entry.getKey();
+                            int qty = entry.getValue();
+                            double price = menu.get(itemName);
+                            double itemTotal = price * qty;
+                            System.out.println(itemName + " x " + qty + " Rs" + itemTotal);
+                            total += itemTotal;
+                        }
+                        System.out.println("--------------------");
+                        System.out.println("Total: Rs" + total);
+                        break;
+    
+                    case 3:
+                        System.out.println("Exiting...");
+                        scanner.close();
+                        return;
+    
+                    default:
+                        System.out.println("Invalid option. Try again.");
+                }
+            }
+            
+        }
+
+
+
+        public static void vegmain() {
+        
+            System.out.println();
+            
+    
+                  
+            Map<String, Double> menu = new HashMap<>();
+            menu.put("butter paneer", 185.99);
+            menu.put("dal makhni", 108.99);
+            menu.put("salad", 40.99);
+            menu.put("drink", 21.99);
+            menu.put("mix veg", 94.99);
+            menu.put("roti", 4.99);
+    
+            Map<Integer, Map<String, Integer>> orders = new HashMap<>();
+            Scanner scanner = new Scanner(System.in);
+    
+            while (true) {
+                System.out.println("\n1. Add order to a table");
+                System.out.println("2. Calculate bill for a table");
+                System.out.println("3. Exit");
+                System.out.print("Choose an option: ");
+                int option = scanner.nextInt();
+    
+                switch (option) {
+                    case 1:
+                        System.out.print("Enter table number: ");
+                        int tableNumber = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline character
+                        System.out.println("Enter item (butter paneer, dal makhni, salad, drink,mix veg, roti): ");
+                        String item = scanner.nextLine().toLowerCase();
+    
+                        if (!menu.containsKey(item)) {
+                            System.out.println("Invalid item entered. Please try again.");
+                            continue;
+                        }
+    
+                        System.out.print("Enter quantity: ");
+                        int quantity = scanner.nextInt();
+    
+                        orders.computeIfAbsent(tableNumber, k -> new HashMap<>())
+                                .merge(item, quantity, Integer::sum);
+                        System.out.println(quantity + " " + item + "(s) added to table " + tableNumber + "'s order.");
+                        break;
+    
+                    case 2:
+                        System.out.print("Enter table number to calculate bill: ");
+                        tableNumber = scanner.nextInt();
+                        Map<String, Integer> tableOrder = orders.getOrDefault(tableNumber, new HashMap<>());
+    
+                        if (tableOrder.isEmpty()) {
+                            System.out.println("No items ordered for table " + tableNumber);
+                            continue;
+                        }
+    
+                        System.out.println("Bill for Table " + tableNumber + ":");
+                        double total = 0.0;
+                        for (Map.Entry<String, Integer> entry : tableOrder.entrySet()) {
+                            String itemName = entry.getKey();
+                            int qty = entry.getValue();
+                            double price = menu.get(itemName);
+                            double itemTotal = price * qty;
+                            System.out.println(itemName + " x " + qty + " Rs" + itemTotal);
+                            total += itemTotal;
+                        }
+                        System.out.println("--------------------");
+                        System.out.println("Total: Rs" + total);
+                        break;
+    
+                    case 3:
+                        System.out.println("Exiting...");
+                        scanner.close();
+                        return;
+    
+                    default:
+                        System.out.println("Invalid option. Try again.");
+                }
+            }
+     }
+    }
+
+public class RestaurantBill {
+    public static void main(String[] args) {
+        menu obj=new menu();
+        obj.foodmenu();
+    }
+
+   
+    }
